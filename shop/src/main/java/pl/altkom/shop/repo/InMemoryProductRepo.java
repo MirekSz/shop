@@ -1,6 +1,9 @@
 package pl.altkom.shop.repo;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -15,8 +18,8 @@ public class InMemoryProductRepo implements ProductRepo {
 
 	@PostConstruct
 	public void init() {
-		insert(new Product());
-		insert(new Product());
+		insert(new Product("Rower", "Bardzo dobry rower", 12, BigDecimal.TEN));
+		insert(new Product("Sanki", "Sanki zimowe", 123, BigDecimal.valueOf(12.45)));
 	}
 
 	@Override
@@ -31,5 +34,10 @@ public class InMemoryProductRepo implements ProductRepo {
 	@Override
 	public Integer count() {
 		return products.size();
+	}
+
+	@Override
+	public List<Product> getAll() {
+		return new ArrayList<Product>(products.values());
 	}
 }

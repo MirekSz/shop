@@ -2,12 +2,26 @@ package pl.altkom.shop.model;
 
 import java.math.BigDecimal;
 
+import javax.validation.constraints.NotNull;
+
 public class Product {
 	private Long id;
+	@NotNull
 	private String name;
 	private String description;
-	private Integer quentity;
+	private Integer quantity;
 	private BigDecimal price;
+
+	public Product(String name, String description, int quentity, BigDecimal price) {
+		this.name = name;
+		this.description = description;
+		this.setQuantity(quentity);
+		this.price = price;
+	}
+
+	public Product() {
+
+	}
 
 	public Long getId() {
 		return id;
@@ -33,20 +47,20 @@ public class Product {
 		this.description = description;
 	}
 
-	public Integer getQuentity() {
-		return quentity;
-	}
-
-	public void setQuentity(Integer quentity) {
-		this.quentity = quentity;
-	}
-
 	public BigDecimal getPrice() {
 		return price;
 	}
 
 	public void setPrice(BigDecimal price) {
 		this.price = price;
+	}
+
+	public Integer getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(Integer quantity) {
+		this.quantity = quantity;
 	}
 
 }
