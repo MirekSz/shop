@@ -27,10 +27,10 @@ public class WebBootstrap implements WebApplicationInitializer {
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 
-		forceUTF8(container);
+		utf8(container);
 	}
 
-	private void forceUTF8(ServletContext container) {
+	private void utf8(ServletContext container) {
 		CharacterEncodingFilter characterEncodingFilter = new CharacterEncodingFilter();
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
