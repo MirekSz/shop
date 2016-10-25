@@ -1,9 +1,10 @@
 package pl.altkom.shop.repo;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 
 import org.springframework.stereotype.Repository;
 
@@ -12,19 +13,21 @@ import pl.altkom.shop.model.Product;
 
 @Repository
 public class HibernateProductRepository extends BaseRepo implements ProductRepo {
+	@PersistenceContext
+	EntityManager em;
 
 	@PostConstruct
 	public void init() {
-		insert(new Product("Rower", "Bardzo dobry rower", 12, BigDecimal.TEN));
-		insert(new Product("Sanki", "Sanki zimowe", 123, BigDecimal.valueOf(12.45)));
+		// insert(new Product("Rower", "Bardzo dobry rower", 12,
+		// BigDecimal.TEN));
+		// insert(new Product("Sanki", "Sanki zimowe", 123,
+		// BigDecimal.valueOf(12.45)));
 	}
 
 	@Override
 	@Trace
 	public Long insert(Product product) {
-		tx(em -> {
-			em.persist(product);
-		});
+		em.persist(product);
 		return product.getId();
 	}
 
