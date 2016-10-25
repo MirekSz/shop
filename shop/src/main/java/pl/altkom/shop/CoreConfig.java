@@ -8,12 +8,12 @@ import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 
 @Configuration
 @ComponentScan("pl.altkom.shop")
-@PropertySource(value = { "classpath:application.properties",
-		"file:/etc/config/application.properties" }, ignoreResourceNotFound = true)
+@PropertySource(value = { "classpath:application.properties" }, ignoreResourceNotFound = true)
 public class CoreConfig {
 
 	@Bean
 	public PropertySourcesPlaceholderConfigurer propertyReader() {
 		return new PropertySourcesPlaceholderConfigurer();
 	}
+
 }

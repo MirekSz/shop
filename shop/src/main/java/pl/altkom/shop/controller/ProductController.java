@@ -43,6 +43,7 @@ public class ProductController {
 	@RequestMapping(value = "/add", method = RequestMethod.POST)
 	public String save(Model model, @ModelAttribute @Valid Product product, BindingResult bindingResult)
 			throws Exception {
+		bindingResult.reject("ble");
 		if (bindingResult.hasErrors()) {
 			return "product/product-add";
 		}

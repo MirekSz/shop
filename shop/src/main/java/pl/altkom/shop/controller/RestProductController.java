@@ -4,7 +4,6 @@ import java.util.List;
 
 import javax.inject.Inject;
 
-import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -18,8 +17,6 @@ public class RestProductController {
 
 	@Inject
 	ProductRepo repo;
-	@Inject
-	JdbcTemplate jdbcTemplate;
 
 	@RequestMapping("/list")
 	public List<Product> list(Model model) throws Exception {

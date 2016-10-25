@@ -9,7 +9,19 @@
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 <form:form class="form-horizontal" method="post"
 	modelAttribute="product">
-
+	<spring:hasBindErrors name="product">
+		<div class="alert alert-danger" role="alert">
+			<button type="button" class="close" data-dismiss="alert"
+				aria-label="Close">
+				<span aria-hidden="true">&times;</span>
+			</button>
+			Errors:
+				<c:forEach var="error" items="${errors.allErrors}">
+					<li><spring:message code="${error.code}"
+							text="${error.defaultMessage}" /></li>
+				</c:forEach>
+		</div>
+	</spring:hasBindErrors>
 	<spring:bind path="name">
 		<div class="form-group ${status.error ? 'has-error' : ''}">
 			<label class="col-sm-2 control-label">Name</label>

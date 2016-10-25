@@ -1,17 +1,24 @@
 package pl.altkom.shop.repo;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceUnit;
+
+import org.springframework.stereotype.Repository;
 
 import pl.altkom.shop.model.Product;
 
-public class InMemoryProductRepo implements ProductRepo {
-	Map<Long, Product> products = new HashMap<Long, Product>();
+@Repository
+public class HibernateProductRepository implements ProductRepo {
+	@PersistenceContext
+	EntityManager em;
+	@PersistenceUnit
+	EntityManagerFactory emf;
 
 	@PostConstruct
 	public void init() {
@@ -21,20 +28,18 @@ public class InMemoryProductRepo implements ProductRepo {
 
 	@Override
 	public Long insert(Product product) {
-		product.setId(products.size() + 1L);
-
-		products.put(product.getId(), product);
-
+		// em.persist(product);
 		return product.getId();
 	}
 
 	@Override
 	public Integer count() {
-		return products.size();
+		return null;
 	}
 
 	@Override
 	public List<Product> getAll() {
-		return new ArrayList<Product>(products.values());
+		return null;
 	}
+
 }

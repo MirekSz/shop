@@ -1,7 +1,5 @@
 package pl.altkom.shop.service;
 
-import java.util.Properties;
-
 import javax.inject.Inject;
 
 import org.springframework.beans.factory.annotation.Value;
@@ -19,8 +17,6 @@ public class ProductService {
 	ApplicationEventPublisher publisher;
 	@Value("${appName}")
 	public String appName;
-	@Value("${classpath:application.properties}")
-	public Properties sample;
 
 	public Long insert(Product product) {
 
