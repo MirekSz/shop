@@ -8,6 +8,6 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
-  
+  hello world
 <%@ include file="/WEB-INF/pages/layout/footer.jsp"%>
 
