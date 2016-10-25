@@ -4,15 +4,19 @@ import java.math.BigDecimal;
 
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 public class Product {
 	private Long id;
 	@NotNull
 	private String name;
+	@NotEmpty
 	private String description;
 	private Integer quantity;
 	private BigDecimal price;
 
-	public Product(String name, String description, int quentity, BigDecimal price) {
+	public Product(String name, String description, int quentity,
+			BigDecimal price) {
 		this.name = name;
 		this.description = description;
 		this.setQuantity(quentity);

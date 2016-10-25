@@ -9,5 +9,6 @@
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
   hello world
+  
 <%@ include file="/WEB-INF/pages/layout/footer.jsp"%>
 

@@ -19,7 +19,8 @@ public class InMemoryProductRepo implements ProductRepo {
 	@PostConstruct
 	public void init() {
 		insert(new Product("Rower", "Bardzo dobry rower", 12, BigDecimal.TEN));
-		insert(new Product("Sanki", "Sanki zimowe", 123, BigDecimal.valueOf(12.45)));
+		insert(new Product("Sanki", "Sanki zimowe", 123,
+				BigDecimal.valueOf(12.45)));
 	}
 
 	@Override
@@ -37,7 +38,38 @@ public class InMemoryProductRepo implements ProductRepo {
 	}
 
 	@Override
-	public List<Product> getAll() {
+	public List<Product> getAll(String query) {
+		if (query != null) {
+
+			ArrayList<Product> arrayList = new ArrayList<Product>(
+					products.values());
+			List<Product> result = new ArrayList<Product>();
+			for (Product product : arrayList) {
+				if (product.getName() != null
+						&& product.getName().toLowerCase()
+								.contains(query.toLowerCase())) {
+					result.add(product);
+				}
+			}
+			return result;
+		}
 		return new ArrayList<Product>(products.values());
+	}
+
+	@Override
+	public void delete(Long id) {
+		this.products.remove(id);
+
+	}
+
+	@Override
+	public Product find(Long id) {
+		return products.get(id);
+	}
+
+	@Override
+	public void update(Product product) {
+		products.put(product.getId(), product);
+
 	}
 }
