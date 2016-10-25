@@ -3,6 +3,7 @@
 <%@ page isELIgnored="false" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}" />
 <html>
 <head>
@@ -12,6 +13,7 @@
 <script type="text/javascript" src="${contextPath}/public/assets/js/jquery-2.2.4.js"></script>
 <script type="text/javascript" src="${contextPath}/public/assets/auctions.js"></script>
 </head>
+<sec:authentication var="user" property="principal" />
 <body>
 	<div class="navbar navbar-default navbar-fixed-top" role="navigation">
 		<div class="container">
@@ -28,11 +30,19 @@
 				<ul class="nav navbar-nav">
 					<li class="active"><a href="${contextPath}/product/list">Products list</a></li>
 					<li><a href="${contextPath}/cart">Cart</a></li>
-					<li><a href="">Logout</a></li>
+					<sec:authorize
+						access="isAuthenticated()">
+					<li><a href="#" onClick="$('#logoutForm').submit();return false;">Logout ${user.username}</a></li>
+					</sec:authorize>
 				</ul>
 			</div>
 			<!--/.nav-collapse -->
 		</div>
+		<c:url var="logoutUrl" value="/logout"/>
+<form action="${logoutUrl}" method="post" style="display:none" id="logoutForm">
+  <input type="submit" value="Log out" id="logout"/>
+  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+</form>
 		</div>
 			<br /> <br /> <br /> <br />
 			<div class="container" >
