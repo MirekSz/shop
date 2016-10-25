@@ -9,6 +9,12 @@
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
  <form class="form-signin" action="login" method="POST">
+<c:if test="${param.error!=null}">
+		<div class="alert alert-danger" role="alert" >
+			<span class="glyphicon 	glyphicon glyphicon-flash" aria-hidden="true"></span>
+			<strong>Invalid user or password</strong>
+		</div>
+</c:if>
         <h2 class="form-signin-heading">Please sign in</h2>
         <label  class="sr-only">Email address</label>
         <input type="text" name="username"  class="form-control" placeholder="Username" required autofocus>
