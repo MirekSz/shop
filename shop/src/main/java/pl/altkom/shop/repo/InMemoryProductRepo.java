@@ -37,4 +37,28 @@ public class InMemoryProductRepo implements ProductRepo {
 	public List<Product> getAll() {
 		return new ArrayList<Product>(products.values());
 	}
+
+	@Override
+	public List<Product> getAll(String query) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void delete(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Product find(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(Product product) {
+		// TODO Auto-generated method stub
+
+	}
 }

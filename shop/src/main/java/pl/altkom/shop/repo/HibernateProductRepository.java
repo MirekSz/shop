@@ -4,21 +4,14 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceUnit;
 
 import org.springframework.stereotype.Repository;
 
+import pl.altkom.shop.aop.Trace;
 import pl.altkom.shop.model.Product;
 
 @Repository
-public class HibernateProductRepository implements ProductRepo {
-	@PersistenceContext
-	EntityManager em;
-	@PersistenceUnit
-	EntityManagerFactory emf;
+public class HibernateProductRepository extends BaseRepo implements ProductRepo {
 
 	@PostConstruct
 	public void init() {
@@ -27,8 +20,11 @@ public class HibernateProductRepository implements ProductRepo {
 	}
 
 	@Override
+	@Trace
 	public Long insert(Product product) {
-		// em.persist(product);
+		tx(em -> {
+			em.persist(product);
+		});
 		return product.getId();
 	}
 
@@ -39,7 +35,31 @@ public class HibernateProductRepository implements ProductRepo {
 
 	@Override
 	public List<Product> getAll() {
+		return em.createQuery("FROM Product").getResultList();
+	}
+
+	@Override
+	public List<Product> getAll(String query) {
+		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void delete(Long id) {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	public Product find(Long id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public void update(Product product) {
+		// TODO Auto-generated method stub
+
 	}
 
 }

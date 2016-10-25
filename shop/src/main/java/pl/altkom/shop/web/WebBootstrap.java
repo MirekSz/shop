@@ -20,6 +20,7 @@ public class WebBootstrap implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) throws ServletException {
 
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+		ctx.getEnvironment().setActiveProfiles("web");
 		ctx.register(CoreConfig.class);
 		ctx.setServletContext(container);
 
