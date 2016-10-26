@@ -8,6 +8,7 @@ import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+import org.springframework.context.annotation.ImportResource;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.DispatcherServlet;
 
 import pl.altkom.shop.CoreConfig;
 
+@ImportResource("classpath:security.xml")
 public class WebBootstrap implements WebApplicationInitializer {
 
 	@Override

@@ -1,4 +1,4 @@
-package pl.altkom.shop.aop;
+package pl.altkom.shop;
 
 import java.nio.charset.Charset;
 
@@ -12,8 +12,7 @@ import org.springframework.web.client.RestTemplate;
 
 import pl.altkom.shop.model.Product;
 
-public class Main {
-
+public class RestClient {
 	public static void main(String[] args) {
 		HttpHeaders headers = new HttpHeaders();
 		String string = "Basic " + Base64Utils.encodeToString("user:user".getBytes(Charset.forName("UTF-8")));
@@ -24,10 +23,8 @@ public class Main {
 		((SimpleClientHttpRequestFactory) restTemplate.getRequestFactory()).setConnectTimeout(1000 * 30);
 
 		HttpEntity<String> entity = new HttpEntity<String>(headers);
-		ResponseEntity<Product[]> exchange = restTemplate.exchange("http://localhost:8080/shop/rest/product/list",
+		ResponseEntity<Product[]> exchange = restTemplate.exchange("http://localhost:8080/shop/rest/product",
 				HttpMethod.GET, entity, Product[].class);
-		exchange = restTemplate.exchange("http://localhost:8080/shop/rest/product/list", HttpMethod.GET, entity,
-				Product[].class);
 		System.out.println(exchange.getBody()[0].getName());
 		System.out.println(exchange.getHeaders());
 	}

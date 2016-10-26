@@ -16,7 +16,7 @@ public class SaleDocument {
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	private String number;
-	@OneToMany
+	@OneToMany(mappedBy = "saleDocument")
 	private Set<SaleDocumentItem> items = new HashSet();
 	private BigDecimal totalPrice;
 

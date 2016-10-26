@@ -1,34 +1,46 @@
 package pl.altkom.shop.controller;
 
-import java.util.Enumeration;
+import io.swagger.annotations.ApiOperation;
+
 import java.util.List;
 
 import javax.inject.Inject;
-import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pl.altkom.shop.model.Product;
-import pl.altkom.shop.repo.ProductRepo;
+import pl.altkom.shop.service.ProductService;
 
 @RestController
 @RequestMapping("/rest/product")
 public class RestProductController {
-
 	@Inject
-	ProductRepo repo;
+	ProductService service;
 
-	@RequestMapping("/list")
-	public List<Product> list(Model model, HttpServletRequest reg) throws Exception {
-		Enumeration<String> headerNames = reg.getHeaderNames();
-		while (headerNames.hasMoreElements()) {
-			String nextElement = headerNames.nextElement();
-			String header = reg.getHeader(nextElement);
-			System.out.println(nextElement + " " + header);
-		}
-		return repo.getAll();
+	@RequestMapping(method = RequestMethod.GET)
+	@ApiOperation("Pobiera liste wszystkich produktow")
+	public List<Product> list() {
+		return service.getAll(null);
+	}
+
+	@RequestMapping(method = RequestMethod.PUT)
+	public void add(@RequestBody Product product) {
+		service.insert(product);
+	}
+
+	@RequestMapping(method = RequestMethod.POST)
+	public void update(@RequestBody Product product) {
+		service.update(product);
+	}
+
+	@RequestMapping(method = RequestMethod.DELETE)
+	public void delete(@RequestParam("id") Long id) {
+
+		service.delete(id);
 	}
 
 }

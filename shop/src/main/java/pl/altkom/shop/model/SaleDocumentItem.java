@@ -14,6 +14,8 @@ public class SaleDocumentItem {
 	private Integer lp;
 	@ManyToOne
 	private Product product;
+	@ManyToOne
+	private SaleDocument saleDocument;
 	private Integer quantity;
 
 	public Long getId() {
@@ -46,6 +48,14 @@ public class SaleDocumentItem {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public SaleDocument getSaleDocument() {
+		return saleDocument;
+	}
+
+	public void setSaleDocument(SaleDocument saleDocument) {
+		this.saleDocument = saleDocument;
 	}
 
 }

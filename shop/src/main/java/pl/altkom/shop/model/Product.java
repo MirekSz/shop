@@ -1,5 +1,8 @@
 package pl.altkom.shop.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
 import javax.persistence.Entity;
@@ -9,17 +12,20 @@ import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
+@ApiModel
 public class Product {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotNull
+	@ApiModelProperty("uwagi")
 	private String name;
 	private String description;
 	private Integer quantity;
 	private BigDecimal price;
 
-	public Product(String name, String description, int quentity, BigDecimal price) {
+	public Product(String name, String description, int quentity,
+			BigDecimal price) {
 		this.name = name;
 		this.description = description;
 		this.setQuantity(quentity);

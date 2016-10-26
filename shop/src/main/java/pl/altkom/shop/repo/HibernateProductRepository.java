@@ -2,66 +2,66 @@ package pl.altkom.shop.repo;
 
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
-import pl.altkom.shop.aop.Trace;
+import pl.altkom.shop.aop.Monitoring;
 import pl.altkom.shop.model.Product;
 
 @Repository
+@Monitoring
+@Transactional
 public class HibernateProductRepository extends BaseRepo implements ProductRepo {
-	@PersistenceContext
-	EntityManager em;
-
-	@PostConstruct
-	public void init() {
-		// insert(new Product("Rower", "Bardzo dobry rower", 12,
-		// BigDecimal.TEN));
-		// insert(new Product("Sanki", "Sanki zimowe", 123,
-		// BigDecimal.valueOf(12.45)));
-	}
 
 	@Override
-	@Trace
 	public Long insert(Product product) {
 		em.persist(product);
+
 		return product.getId();
 	}
 
 	@Override
 	public Integer count() {
-		return null;
-	}
+		return (Integer) em.createQuery(
+				"select count(prod) from Product as prod").getSingleResult();
 
-	@Override
-	public List<Product> getAll() {
-		return em.createQuery("FROM Product").getResultList();
 	}
 
 	@Override
 	public List<Product> getAll(String query) {
-		// TODO Auto-generated method stub
-		return null;
+
+		if (query == null) {
+			return em.createQuery("from Product").getResultList();
+		} else {
+			return em.createQuery("from Product where name like :query")
+					.setParameter("query", "%" + query + "%").getResultList();
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
-		// TODO Auto-generated method stub
+		Product product = em.find(Product.class, id);
 
+		em.remove(product);
 	}
 
 	@Override
 	public Product find(Long id) {
-		// TODO Auto-generated method stub
-		return null;
+		return em.getReference(Product.class, id);
 	}
 
 	@Override
 	public void update(Product product) {
-		// TODO Auto-generated method stub
+
+		em.merge(product);
+
+	}
+
+	@Override
+	public void save(Object entity) {
+
+		em.persist(entity);
 
 	}
 

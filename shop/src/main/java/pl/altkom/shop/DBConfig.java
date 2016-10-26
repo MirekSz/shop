@@ -56,7 +56,7 @@ public class DBConfig {
 
 	private HibernateJpaVendorAdapter createHibernateAdapter() {
 		HibernateJpaVendorAdapter hibernateJpaVendorAdapter = new HibernateJpaVendorAdapter();
-		hibernateJpaVendorAdapter.setGenerateDdl(true);
+		hibernateJpaVendorAdapter.setGenerateDdl(false);
 		hibernateJpaVendorAdapter.setDatabase(Database.MYSQL);
 		return hibernateJpaVendorAdapter;
 	}

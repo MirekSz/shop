@@ -8,6 +8,9 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
-  
+<div class="jumbotron">
+  <h1>Hello, world!</h1>
+</div>
+
 <%@ include file="/WEB-INF/pages/layout/footer.jsp"%>
 

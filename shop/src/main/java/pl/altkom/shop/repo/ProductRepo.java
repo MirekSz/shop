@@ -10,8 +10,6 @@ public interface ProductRepo {
 
 	Integer count();
 
-	public List<Product> getAll();
-
 	public List<Product> getAll(String query);
 
 	public void delete(Long id);
@@ -19,4 +17,6 @@ public interface ProductRepo {
 	public Product find(Long id);
 
 	public void update(Product product);
+
+	public void save(Object entity);
 }
