@@ -5,6 +5,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.altkom.shop.aop.Monitoring;
 import pl.altkom.shop.model.Product;
@@ -14,6 +15,7 @@ import pl.altkom.shop.repo.ProductRepo;
 
 @Service
 @Monitoring
+@Transactional
 public class SaleDocumentService {
 	@Inject
 	ProductRepo productRepo;
@@ -21,7 +23,6 @@ public class SaleDocumentService {
 	public void insert(DocumentRequest documentRequest) {
 		SaleDocument saleDocument = new SaleDocument();
 		productRepo.save(saleDocument);
-
 		List<Item> items = documentRequest.items;
 		for (Item item : items) {
 			SaleDocumentItem saleDocumentItem = new SaleDocumentItem();
@@ -29,9 +30,8 @@ public class SaleDocumentService {
 			saleDocumentItem.setProduct(product);
 			saleDocumentItem.setQuantity(item.quantity);
 			saleDocumentItem.setSaleDocument(saleDocument);
-			productRepo.save(saleDocumentItem);
-
 			product.setQuantity(product.getQuantity() - item.quantity);
+
 		}
 	}
 

@@ -3,36 +3,28 @@ package pl.altkom.shop.repo;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.altkom.shop.aop.Monitoring;
 import pl.altkom.shop.model.Product;
 
 @Repository
 @Monitoring
+@Transactional
 public class HibernateProductRepository extends BaseRepo implements ProductRepo {
 
 	@Override
 	public Long insert(Product product) {
-
-		tx((em) -> {
-
-			em.persist(product);
-
-			return null;
-		});
+		em.persist(product);
 
 		return product.getId();
 	}
 
 	@Override
 	public Integer count() {
-		Long reesult = ((Long) tx((em) -> {
+		return (Integer) em.createQuery(
+				"select count(prod) from Product as prod").getSingleResult();
 
-			return em.createQuery("select count(prod) from Product as prod")
-					.getSingleResult();
-
-		}));
-		return reesult.intValue();
 	}
 
 	@Override
@@ -49,45 +41,27 @@ public class HibernateProductRepository extends BaseRepo implements ProductRepo 
 
 	@Override
 	public void delete(Long id) {
-		tx((em) -> {
-			Product product = em.find(Product.class, id);
+		Product product = em.find(Product.class, id);
 
-			em.remove(product);
-
-			return null;
-
-		});
-
+		em.remove(product);
 	}
 
 	@Override
 	public Product find(Long id) {
-		return (Product) tx((em) -> {
-			return em.getReference(Product.class, id);
-		});
+		return em.getReference(Product.class, id);
 	}
 
 	@Override
 	public void update(Product product) {
-		tx((em) -> {
 
-			em.merge(product);
-
-			return null;
-
-		});
+		em.merge(product);
 
 	}
 
 	@Override
 	public void save(Object entity) {
-		tx((em) -> {
 
-			em.persist(entity);
-
-			return null;
-
-		});
+		em.persist(entity);
 
 	}
 
