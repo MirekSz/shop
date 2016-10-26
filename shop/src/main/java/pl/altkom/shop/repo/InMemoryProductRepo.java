@@ -8,11 +8,9 @@ import java.util.Map;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.stereotype.Repository;
-
 import pl.altkom.shop.model.Product;
 
-@Repository
+//@Repository
 public class InMemoryProductRepo implements ProductRepo {
 	Map<Long, Product> products = new HashMap<Long, Product>();
 
@@ -70,6 +68,12 @@ public class InMemoryProductRepo implements ProductRepo {
 	@Override
 	public void update(Product product) {
 		products.put(product.getId(), product);
+
+	}
+
+	@Override
+	public void save(Object entity) {
+		// TODO Auto-generated method stub
 
 	}
 }

@@ -17,4 +17,6 @@ public interface ProductRepo {
 	public Product find(Long id);
 
 	public void update(Product product);
+
+	public void save(Object entity);
 }

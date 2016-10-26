@@ -2,22 +2,20 @@ package pl.altkom.shop;
 
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import pl.altkom.shop.model.Product;
-import pl.altkom.shop.repo.ProductRepo;
-import pl.altkom.shop.service.ProductService;
+import pl.altkom.shop.service.SaleDocumentService;
 
 public class Main {
 	@SuppressWarnings("resource")
 	public static void main(String[] args) throws Exception {
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(
 				CoreConfig.class);
-		ProductService productService = context.getBean(ProductService.class);
-		productService.insert(new Product());
+		context.getBean(SaleDocumentService.class).count();
+		// SaleDocumentService service = context
+		// .getBean(SaleDocumentService.class);
+		// DocumentRequest documentRequest = new DocumentRequest();
+		// documentRequest.items.add(new Item(9L, 3));
+		// documentRequest.items.add(new Item(10L, 5));
 
-		System.out.println(productService.appName);
-		System.out.println(context.getBean(ProductRepo.class).count());
-		context.stop();
-		System.out.println(context.getBean(ProductRepo.class).count());
 		// System.out.println(productService.sample.getFilename());
 		//
 		// Properties properties = new Properties();

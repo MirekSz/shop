@@ -1,16 +1,25 @@
 package pl.altkom.shop.model;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+
 import java.math.BigDecimal;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
+@Entity
+@ApiModel
 public class Product {
+	@Id
+	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
 	@NotNull
+	@ApiModelProperty("uwagi")
 	private String name;
-	@NotEmpty
 	private String description;
 	private Integer quantity;
 	private BigDecimal price;

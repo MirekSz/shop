@@ -20,10 +20,12 @@ public class WebBootstrap implements WebApplicationInitializer {
 	public void onStartup(ServletContext container) throws ServletException {
 
 		AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
+		ctx.getEnvironment().setActiveProfiles("web");
 		ctx.register(CoreConfig.class);
 		ctx.setServletContext(container);
 
-		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
+		ServletRegistration.Dynamic servlet = container.addServlet(
+				"dispatcher", new DispatcherServlet(ctx));
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 
@@ -35,7 +37,9 @@ public class WebBootstrap implements WebApplicationInitializer {
 		characterEncodingFilter.setEncoding("UTF-8");
 		characterEncodingFilter.setForceEncoding(true);
 
-		container.addFilter("characterEncoding", characterEncodingFilter).addMappingForUrlPatterns(
-				EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
+		container.addFilter("characterEncoding", characterEncodingFilter)
+				.addMappingForUrlPatterns(
+						EnumSet.of(DispatcherType.REQUEST,
+								DispatcherType.FORWARD), true, "/*");
 	}
 }

@@ -33,11 +33,6 @@ public class ProductController {
 		binder.registerCustomEditor(String.class, new StringTrimmerEditor(true));
 	}
 
-	// @ExceptionHandler
-	// public void get(Exception e) {
-	// System.out.println(e);
-	// }
-
 	@RequestMapping(method = RequestMethod.GET, value = "/list")
 	public String product(Model model,
 			@RequestParam(value = "query", required = false) String query)
@@ -46,6 +41,16 @@ public class ProductController {
 		model.addAttribute("products", repo.getAll(query));
 
 		return "product/product-list";
+	}
+
+	@RequestMapping(method = RequestMethod.GET, value = "/list/pdf")
+	public String pdfView(Model model,
+			@RequestParam(value = "query", required = false) String query)
+			throws IOException {
+
+		model.addAttribute("products", repo.getAll(query));
+
+		return "ProductPDFView";
 	}
 
 	@RequestMapping(value = "/{id}/delete")
@@ -65,7 +70,6 @@ public class ProductController {
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute @Valid Product product,
 			BindingResult bindingResult, RedirectAttributes redirectAttributes) {
-
 		try {
 			if (product.getId() == null) {
 				repo.insert(product);
