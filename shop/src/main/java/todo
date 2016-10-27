@@ -1,6 +1,7 @@
 RedirectAttrubites if
 obsluga wyjatko controller advice
 client rest
+ sb = context.getAttributes()['spring.beanfactory']
 cart
 jobs
 asynch
