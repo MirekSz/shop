@@ -7,10 +7,11 @@
 	pageEncoding="UTF-8"%>
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
-
+<sec:authorize access="hasAnyRole('ROLE_USER')">
 	<a href="new" class="btn btn-primary "> <i
 		class=" glyphicon glyphicon-plus"></i> Add new product
 	</a>
+	</sec:authorize >
 	<div class="col-xs-4 pull-right">
 		<div class="input-group">
 			<input type="text" class="form-control searcher"
