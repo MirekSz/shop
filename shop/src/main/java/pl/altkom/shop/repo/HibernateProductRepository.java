@@ -22,8 +22,7 @@ public class HibernateProductRepository extends BaseRepo implements ProductRepo 
 
 	@Override
 	public Integer count() {
-		return (Integer) em.createQuery(
-				"select count(prod) from Product as prod").getSingleResult();
+		return (Integer) em.createQuery("select count(prod) from Product as prod").getSingleResult();
 
 	}
 
@@ -33,8 +32,8 @@ public class HibernateProductRepository extends BaseRepo implements ProductRepo 
 		if (query == null) {
 			return em.createQuery("from Product").getResultList();
 		} else {
-			return em.createQuery("from Product where name like :query")
-					.setParameter("query", "%" + query + "%").getResultList();
+			return em.createQuery("from Product where name like :query").setParameter("query", "%" + query + "%")
+					.getResultList();
 		}
 
 	}
@@ -48,7 +47,7 @@ public class HibernateProductRepository extends BaseRepo implements ProductRepo 
 
 	@Override
 	public Product find(Long id) {
-		return em.getReference(Product.class, id);
+		return em.find(Product.class, id);
 	}
 
 	@Override
