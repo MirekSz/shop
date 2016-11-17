@@ -8,7 +8,7 @@
 <%@ page contentType="text/html; charset=UTF-8"%>
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
-	<a href="add" class="btn btn-primary "> <i
+	<a href="new" class="btn btn-primary "> <i
 		class=" glyphicon glyphicon-plus"></i> Add new product
 	</a>
 	<div class="col-xs-4 pull-right">

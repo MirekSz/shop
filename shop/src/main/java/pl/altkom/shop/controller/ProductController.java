@@ -68,15 +68,15 @@ public class ProductController {
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute @Valid Product product, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
-		try {
-			if (product.getId() == null) {
-				service.insert(product);
-			} else {
-				service.update(product);
-			}
-		} catch (Exception e) {
-			bindingResult.reject("backed.error");
+		// try {
+		if (product.getId() == null) {
+			service.insert(product);
+		} else {
+			service.update(product);
 		}
+		// } catch (Exception e) {
+		// bindingResult.reject("backed.error");
+		// }
 
 		if (bindingResult.hasErrors()) {
 			return "product/product-form";

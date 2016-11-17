@@ -30,5 +30,7 @@
 			</user-service>
 		</authentication-provider>
 	</authentication-manager>
+	
+	<global-method-security pre-post-annotations="enabled" jsr250-annotations="enabled" secured-annotations="enabled"/>
 
 </beans:beans>
