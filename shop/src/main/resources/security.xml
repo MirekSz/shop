@@ -9,9 +9,10 @@
 	<http auto-config="true" use-expressions="true" pattern="/rest/**">
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<http-basic/>
+		<csrf disabled="true"/> 
 	</http>
 
-	<http auto-config="true" use-expressions="true" pattern="/**">
+	<http auto-config="true" use-expressions="true" pattern="/**" >
 		<intercept-url pattern="/login*" access="isAnonymous()" />
 		<intercept-url pattern="/public/**" access="permitAll" />
 		<intercept-url pattern="/**" access="isAuthenticated()" />
