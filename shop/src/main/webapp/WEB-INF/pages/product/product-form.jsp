@@ -16,7 +16,7 @@
 				<span aria-hidden="true">&times;</span>
 			</button>
 			Errors:
-				<c:forEach var="error" items="${errors.allErrors}">
+				<c:forEach var="error" items="${errors.globalErrors}">
 					<li><spring:message code="${error.code}"
 							text="${error.defaultMessage}" /></li>
 				</c:forEach>

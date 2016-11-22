@@ -68,6 +68,11 @@ public class ProductController {
 	@RequestMapping(value = "/new", method = RequestMethod.POST)
 	public String saveProduct(@ModelAttribute @Valid Product product, BindingResult bindingResult,
 			RedirectAttributes redirectAttributes) {
+		bindingResult.reject("backed.error");
+		if (bindingResult.hasErrors()) {
+			return "product/product-form";
+		}
+
 		// try {
 		if (product.getId() == null) {
 			service.insert(product);
@@ -77,10 +82,6 @@ public class ProductController {
 		// } catch (Exception e) {
 		// bindingResult.reject("backed.error");
 		// }
-
-		if (bindingResult.hasErrors()) {
-			return "product/product-form";
-		}
 
 		redirectAttributes.addFlashAttribute("operationDone", true);
 		return "redirect:/product/list";
