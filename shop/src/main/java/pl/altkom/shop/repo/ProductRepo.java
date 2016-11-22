@@ -18,5 +18,4 @@ public interface ProductRepo {
 
 	public void update(Product product);
 
-	public void save(Object entity);
 }

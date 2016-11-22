@@ -9,6 +9,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @Entity
@@ -21,7 +22,10 @@ public class Product {
 	@ApiModelProperty("uwagi")
 	private String name;
 	private String description;
+	@NotNull
+	@Min(5)
 	private Integer quantity;
+	@NotNull
 	private BigDecimal price;
 
 	public Product(String name, String description, int quentity,

@@ -20,3 +20,10 @@ gulp.task('copy-folder', function() {
 			gulp.dest('C:\\Users\\Student\\Desktop\\Public\\student8\\shop')).pipe(
 			gulp.dest('C:\\Users\\Student\\Desktop\\Public\\student9\\shop'));
 });
+
+gulp.task('watch', [ ], function() {
+	var watcher = gulp.watch([ './src/**/*', './pom.xml' ], [ 'copy-folder' ]);
+	watcher.on('change', function(event) {
+		console.log('File ' + event.path + ' was ' + event.type);
+	});
+});
