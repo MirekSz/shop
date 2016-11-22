@@ -7,6 +7,8 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceUnit;
 
 import org.springframework.stereotype.Repository;
 
@@ -15,16 +17,18 @@ import pl.altkom.shop.model.Product;
 @Repository
 public class InMemoryProductRepo implements ProductRepo {
 	Map<Long, Product> products = new HashMap<Long, Product>();
+	@PersistenceUnit
+	EntityManagerFactory emf;
 
 	@PostConstruct
 	public void init() {
 		insert(new Product("Rower", "Bardzo dobry rower", 12, BigDecimal.TEN));
-		insert(new Product("Sanki", "Sanki zimowe", 123,
-				BigDecimal.valueOf(12.45)));
+		insert(new Product("Sanki", "Sanki zimowe", 123, BigDecimal.valueOf(12.45)));
 	}
 
 	@Override
 	public Long insert(Product product) {
+		emf.createEntityManager().persist(product);
 		product.setId(products.size() + 1L);
 
 		products.put(product.getId(), product);

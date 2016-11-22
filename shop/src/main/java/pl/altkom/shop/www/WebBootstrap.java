@@ -32,7 +32,7 @@ public class WebBootstrap implements WebApplicationInitializer {
 		servlet.addMapping("/");
 		utf8(container);
 
-		addApacheCxfServlet(container);
+		// addApacheCxfServlet(container);
 
 	}
 
