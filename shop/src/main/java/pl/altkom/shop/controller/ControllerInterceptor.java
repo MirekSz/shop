@@ -24,11 +24,4 @@ public class ControllerInterceptor {
 		response.put("error", ex.toString());
 		return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
-
-	@ExceptionHandler
-	public ResponseEntity<Map> handle(BOException ex) {
-		Map<String, String> response = new HashMap();
-		response.put("error", ex.getUserMessage());
-		return new ResponseEntity(response, HttpStatus.INTERNAL_SERVER_ERROR);
-	}
 }
