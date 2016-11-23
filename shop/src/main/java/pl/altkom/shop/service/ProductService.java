@@ -8,8 +8,7 @@ import pl.altkom.shop.aop.ResponseCache;
 @Service
 public class ProductService {
 	@Monitoring(maxTime = 145)
-	@ResponseCache("products")
-	@EvictCache("products")
+	@ResponseCache
 	public String hello() {
 		return System.currentTimeMillis() + "";
 	}
