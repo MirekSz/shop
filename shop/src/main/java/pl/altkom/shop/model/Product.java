@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 @Entity
 @ApiModel
 @NamedQuery(name = "Product.findByName", query = "FROM Product p WHERE p.name LIKE :name")
-public class Product {
+public class Product extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -30,8 +30,7 @@ public class Product {
 	@NotNull
 	private BigDecimal price;
 
-	public Product(String name, String description, int quentity,
-			BigDecimal price) {
+	public Product(String name, String description, int quentity, BigDecimal price) {
 		this.name = name;
 		this.description = description;
 		this.setQuantity(quentity);

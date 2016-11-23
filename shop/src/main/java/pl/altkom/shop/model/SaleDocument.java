@@ -12,7 +12,7 @@ import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
 @Entity
-public class SaleDocument {
+public class SaleDocument extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
@@ -52,6 +52,21 @@ public class SaleDocument {
 
 	public void setTotalPrice(BigDecimal totalPrice) {
 		this.totalPrice = totalPrice;
+	}
+
+	public void addItem(SaleDocumentItem sdi) {
+		if (sdi.getQuantity() == null || sdi.getQuantity() < 1) {
+			throw new IllegalArgumentException();
+		}
+		this.getItems().add(sdi);
+		sumarize();
+	}
+
+	private void sumarize() {
+		this.totalPrice = items.stream()
+				.map(el -> el.getProduct().getPrice().multiply(BigDecimal.valueOf(el.getQuantity())))
+				.reduce(BigDecimal.ZERO, BigDecimal::add);
+
 	}
 
 }

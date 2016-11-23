@@ -7,7 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 @Entity
-public class SaleDocumentItem {
+public class SaleDocumentItem extends BaseEntity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.SEQUENCE)
 	private Long id;
