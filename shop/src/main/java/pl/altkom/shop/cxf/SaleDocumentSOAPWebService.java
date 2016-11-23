@@ -12,10 +12,9 @@ import pl.altkom.shop.model.SaleDocument;
 @WebService
 public class SaleDocumentSOAPWebService {
 	@WebMethod
-	public @Valid SaleDocument findById(Long id) {
+	public SaleDocument findById(Long id) {
 		SaleDocument saleDocument = new SaleDocument();
 		saleDocument.setNumber("SOAP " + id);
-
 		return saleDocument;
 	}
 

@@ -14,10 +14,10 @@ import pl.altkom.shop.model.SaleDocument;
 
 @Component
 @Path("/saleDocument")
+@Produces(MediaType.APPLICATION_JSON)
 public class SaleDocumentRESTWebService {
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
 	public SaleDocument findById(@PathParam("id") Long id) {
 		SaleDocument saleDocument = new SaleDocument();
 		saleDocument.setNumber("REST " + id);
@@ -25,7 +25,6 @@ public class SaleDocumentRESTWebService {
 	}
 
 	@POST
-	@Produces(MediaType.APPLICATION_JSON)
 	public void save(@Valid SaleDocument saleDocument) {
 	}
 
