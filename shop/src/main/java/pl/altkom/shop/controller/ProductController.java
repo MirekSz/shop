@@ -25,16 +25,27 @@ public class ProductController {
 	ProductRepo repo;
 
 	@RequestMapping("/list")
-	public String list(@RequestParam(required = false, value = "page") Integer page, Model model) throws Exception {
-		List<Product> products = repo.getAll();
+	public String list(
+			@RequestParam(required = false, value = "page") Integer page,
+			Model model) throws Exception {
+		List<Product> products = repo.getAll(null);
 		model.addAttribute("products", products);
 		model.addAttribute("page", page);
 		return "product/product-list";
 	}
 
+	@RequestMapping("/list-as-rows")
+	public String list(Model model) throws Exception {
+		List<Product> products = repo.getAll(null);
+		model.addAttribute("products", products);
+		return "product/product-table-rows";
+	}
+
 	@RequestMapping("/list.pdf")
-	public String listAsPdf(@RequestParam(required = false, value = "page") Integer page, Model model) throws Exception {
-		List<Product> products = repo.getAll();
+	public String listAsPdf(
+			@RequestParam(required = false, value = "page") Integer page,
+			Model model) throws Exception {
+		List<Product> products = repo.getAll(null);
 		model.addAttribute("products", products);
 		model.addAttribute("page", page);
 		return "productPDFView";
@@ -49,8 +60,9 @@ public class ProductController {
 	}
 
 	@RequestMapping(value = "/save", method = RequestMethod.POST)
-	public String submitForm(@ModelAttribute @Valid Product product, BindingResult bindingResult,
-			RedirectAttributes redirectAttributes) throws Exception {
+	public String submitForm(@ModelAttribute @Valid Product product,
+			BindingResult bindingResult, RedirectAttributes redirectAttributes)
+			throws Exception {
 		if (bindingResult.hasErrors()) {
 			return "product/product-form";
 		}
@@ -65,14 +77,16 @@ public class ProductController {
 	}
 
 	@RequestMapping("/{id}/delete")
-	public String delte(@PathVariable("id") Long id, RedirectAttributes redirectAttributes) throws Exception {
+	public String delte(@PathVariable("id") Long id,
+			RedirectAttributes redirectAttributes) throws Exception {
 		repo.delete(id);
 		redirectAttributes.addFlashAttribute("opDone", true);
 		return "redirect:/product/list";
 	}
 
 	@RequestMapping(value = "/{id}/edit", method = RequestMethod.GET)
-	public String edit(@PathVariable("id") Long id, Model model) throws Exception {
+	public String edit(@PathVariable("id") Long id, Model model)
+			throws Exception {
 		Product product = repo.find(id);
 		model.addAttribute("product", product);
 		return "product/product-form";

@@ -10,12 +10,12 @@ public interface ProductRepo {
 
 	Long count();
 
-	public List<Product> getAll();
-
 	public void delete(Long id);
 
 	public Product find(Long id);
 
 	public void update(Product product);
+
+	public List<Product> getAll(String query);
 
 }

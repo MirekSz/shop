@@ -43,17 +43,7 @@
 			</tr>
 		</thead>
 		<tbody>
-			<c:forEach var="p" items="${products}">
-				<tr>
-					<td>${p.id}</td>
-					<td>${p.name}</td>
-					<td>${p.quantity}</td>
-					<td>${p.price}</td>
-					<td><a href="${p.id}/delete"> <i class=" glyphicon glyphicon-remove-circle"></i></a>
-					<a href="${p.id}/edit"> <i class=" glyphicon glyphicon-pencil"></i></a>
-					</td>
-				</tr>
-			</c:forEach>
+			<%@ include file="/WEB-INF/pages/product/product-table-rows.jsp"%>
 		</tbody>
 	</table>
 

@@ -12,7 +12,9 @@ public class Runner {
 				CoreConfig.class);
 
 		ProductService productService = context.getBean(ProductService.class);
-		System.out.println(productService);
+		productService.hello();
+		productService.hello();
+		productService.hello();
 
 	}
 
