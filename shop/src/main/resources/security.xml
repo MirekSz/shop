@@ -8,12 +8,13 @@
 
 	<http auto-config="true" use-expressions="true" pattern="/services/.*" request-matcher="regex">
 		<intercept-url pattern=".*\\?wsdl" access="permitAll" />
+		<intercept-url pattern=".*\\?wadl" access="permitAll" />
 		<intercept-url pattern=".*" access="isAuthenticated()" />
 		<http-basic/>
 		<csrf disabled="true"/> 
 	</http>
 		
-	<http auto-config="true" use-expressions="true" pattern="/rest/**">
+	<http auto-config="true" use-expressions="true" pattern="/api/**">
 		<intercept-url pattern="/**" access="isAuthenticated()" />
 		<http-basic/>
 		<csrf disabled="true"/> 

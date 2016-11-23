@@ -1,7 +1,5 @@
 package pl.altkom.shop.api;
 
-import io.swagger.annotations.ApiOperation;
-
 import java.util.List;
 
 import javax.inject.Inject;
@@ -15,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import io.swagger.annotations.ApiOperation;
 import pl.altkom.shop.model.Product;
 import pl.altkom.shop.repo.ProductRepo;
 
@@ -27,8 +26,7 @@ public class RestProductController {
 
 	@RequestMapping(method = RequestMethod.GET)
 	@ApiOperation("Metoda pobierajaca liste produktow")
-	public List<Product> list(
-			@RequestParam(value = "query", required = false) String query) {
+	public List<Product> list(@RequestParam(value = "query", required = false) String query) {
 		return repo.getAll(query);
 	}
 
@@ -44,9 +42,6 @@ public class RestProductController {
 
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Long> save(@RequestBody Product product) {
-		if (2 > 1) {
-			throw new NullPointerException("uff");
-		}
 		Long id = repo.insert(product);
 		return new ResponseEntity<Long>(id, HttpStatus.CREATED);
 	}
