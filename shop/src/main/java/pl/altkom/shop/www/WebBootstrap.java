@@ -29,26 +29,22 @@ public class WebBootstrap implements WebApplicationInitializer {
 		ctx.setServletContext(container);
 		container.addListener(new ContextLoaderListener(ctx));
 
-		Dynamic securityFiler = container.addFilter(
-				"springSecurityFilterChain", new DelegatingFilterProxy(
-						"springSecurityFilterChain"));
-		securityFiler.addMappingForUrlPatterns(
-				EnumSet.allOf(DispatcherType.class), false, "/*");
+		Dynamic securityFiler = container.addFilter("springSecurityFilterChain",
+				new DelegatingFilterProxy("springSecurityFilterChain"));
+		securityFiler.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
 
-		ServletRegistration.Dynamic servlet = container.addServlet(
-				"dispatcher", new DispatcherServlet(ctx));
+		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 		utf8(container);
 
-		// addApacheCxfServlet(container);
+		addApacheCxfServlet(container);
 
 	}
 
 	private void addApacheCxfServlet(ServletContext servletContext) {
 		CXFServlet cxfServlet = new CXFServlet();
-		ServletRegistration.Dynamic appServlet = servletContext.addServlet(
-				"CXFServlet", cxfServlet);
+		ServletRegistration.Dynamic appServlet = servletContext.addServlet("CXFServlet", cxfServlet);
 		appServlet.setLoadOnStartup(1);
 
 		appServlet.addMapping("/services/*");
@@ -60,8 +56,6 @@ public class WebBootstrap implements WebApplicationInitializer {
 		characterEncodingFilter.setForceEncoding(true);
 
 		container.addFilter("characterEncoding", characterEncodingFilter)
-				.addMappingForUrlPatterns(
-						EnumSet.of(DispatcherType.REQUEST,
-								DispatcherType.FORWARD), true, "/*");
+				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
 	}
 }
