@@ -7,7 +7,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.context.annotation.Primary;
-import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -55,7 +54,6 @@ public class HibernateProductRepo implements ProductRepo {
 
 	@SuppressWarnings("unchecked")
 	@Override
-	@PostFilter("#filtered == authentication.name")
 	public List<Product> getAll(String query) {
 		if (query == null) {
 			return em.createQuery("FROM Product p").getResultList();
