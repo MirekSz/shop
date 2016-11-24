@@ -74,6 +74,6 @@ public class ProductGUITest {
 
 		// then
 		rows = driver.findElements(By.cssSelector("table>tbody>tr"));
-		assertThat(rows.size() + 10).isLessThan(rowsSize);
+		assertThat(rows.size()).isLessThan(rowsSize);
 	}
 }

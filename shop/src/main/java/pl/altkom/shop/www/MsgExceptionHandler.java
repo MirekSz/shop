@@ -8,8 +8,8 @@ import org.apache.cxf.message.Message;
 import org.apache.cxf.phase.AbstractPhaseInterceptor;
 import org.apache.cxf.phase.Phase;
 
-public class ExceptionHandler extends AbstractPhaseInterceptor<Message> {
-	public ExceptionHandler() {
+public class MsgExceptionHandler extends AbstractPhaseInterceptor<Message> {
+	public MsgExceptionHandler() {
 		super(Phase.POST_LOGICAL);
 	}
 
