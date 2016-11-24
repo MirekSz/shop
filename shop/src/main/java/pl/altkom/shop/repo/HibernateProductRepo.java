@@ -2,30 +2,29 @@ package pl.altkom.shop.repo;
 
 import java.util.List;
 
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
+import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import org.springframework.context.annotation.Primary;
+import org.springframework.security.access.prepost.PostFilter;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import pl.altkom.shop.model.Product;
 
+@Transactional
 @Repository
 @Primary
 public class HibernateProductRepo implements ProductRepo {
-	@Inject
-	EntityManagerFactory emf;
+	@PersistenceContext
+	EntityManager em;
 
 	@Override
+	@UserMnagmentAccess
 	public Long insert(Product product) {
-		run((em) -> {
-			em.persist(product);
-			return product.getId();
-		});
-		return null;
+		em.persist(product);
+		return product.getId();
 	}
 
 	@Override
@@ -36,55 +35,33 @@ public class HibernateProductRepo implements ProductRepo {
 
 	@Override
 	public void delete(Long id) {
-		run((em) -> {
-			Product product = em.find(Product.class, id);
-			em.remove(product);
-			return null;
-		});
+		Product product = em.find(Product.class, id);
+		em.remove(product);
 
 	}
 
 	@Override
 	public Product find(Long id) {
-		return (Product) run((em) -> {
-			Product product = em.find(Product.class, id);
-			return product;
-		});
+		Product product = em.find(Product.class, id);
+		return product;
 	}
 
+	// @PreAuthorize("authentication.name == #product.createdBy")
 	@Override
 	public void update(Product product) {
-		run((em) -> {
-			em.merge(product);
-			return null;
-		});
+		em.merge(product);
 
-	}
-
-	interface Runner {
-		Object run(EntityManager em);
-	}
-
-	private Object run(Runner runner) {
-		EntityManager em = emf.createEntityManager();
-		EntityTransaction transaction = em.getTransaction();
-		transaction.begin();
-		Object object = runner.run(em);
-		transaction.commit();
-		return object;
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@PostFilter("#filtered == authentication.name")
 	public List<Product> getAll(String query) {
-		return (List<Product>) run((em) -> {
-			if (query == null) {
-				return em.createQuery("FROM Product p").getResultList();
-			}
-			Query dbQuery = em.createNamedQuery("Product.findByName");
-			dbQuery.setParameter("name", "%" + query + "%");
-			return dbQuery.getResultList();
-		});
-
+		if (query == null) {
+			return em.createQuery("FROM Product p").getResultList();
+		}
+		Query dbQuery = em.createNamedQuery("Product.findByName");
+		dbQuery.setParameter("name", "%" + query + "%");
+		return dbQuery.getResultList();
 	}
 }

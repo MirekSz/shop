@@ -37,6 +37,7 @@
 			<tr>
 				<th>Id</th>
 				<th>Name</th>
+				<th>Extra data</th>
 				<th>Quantity</th>
 				<th>Price</th>
 				<th>Actions</th>

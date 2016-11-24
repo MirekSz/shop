@@ -17,12 +17,15 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import pl.altkom.shop.model.Product;
 import pl.altkom.shop.repo.ProductRepo;
+import pl.altkom.shop.service.ProductService;
 
 @Controller
 @RequestMapping("/product")
 public class ProductController {
 	@Inject
 	ProductRepo repo;
+	@Inject
+	ProductService service;
 
 	@RequestMapping("/list")
 	public String list(

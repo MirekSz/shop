@@ -11,6 +11,7 @@
 				<tr>
 					<td>${p.id}</td>
 					<td>${p.name}</td>
+					<td>${p.lastModifiedBy} ${p.createdBy} ${p.lastModifiedDate}</td>
 					<td>${p.quantity}</td>
 					<td>${p.price}</td>
 					<td><a href="${p.id}/delete"> <i class=" glyphicon glyphicon-remove-circle"></i></a>

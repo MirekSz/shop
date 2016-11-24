@@ -16,7 +16,12 @@ public class SaleDocumentService {
 
 	public void insert(DocumentRequest documentRequest) {
 		SaleDocument saleDocument = new SaleDocument();
-		em.persist(saleDocument);
+		try {
+			em.persist(saleDocument);
+			em.flush();
+		} catch (Exception e) {
+
+		}
 		List<Item> items = documentRequest.items;
 		for (Item item : items) {
 			SaleDocumentItem saleDocumentItem = new SaleDocumentItem();

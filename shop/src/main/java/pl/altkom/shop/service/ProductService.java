@@ -1,15 +1,18 @@
 package pl.altkom.shop.service;
 
+import javax.inject.Inject;
+
 import org.springframework.stereotype.Service;
 
-import pl.altkom.shop.aop.Monitoring;
-import pl.altkom.shop.aop.ResponseCache;
+import pl.altkom.shop.model.Product;
+import pl.altkom.shop.repo.ProductRepo;
 
 @Service
 public class ProductService {
-	@Monitoring(maxTime = 145)
-	@ResponseCache
-	public String hello() {
-		return System.currentTimeMillis() + "";
+	@Inject
+	ProductRepo repo;
+
+	public Product hello(Long id) {
+		return repo.find(id);
 	}
 }

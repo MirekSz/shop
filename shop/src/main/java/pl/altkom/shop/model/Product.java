@@ -30,7 +30,8 @@ public class Product extends BaseEntity {
 	@NotNull
 	private BigDecimal price;
 
-	public Product(String name, String description, int quentity, BigDecimal price) {
+	public Product(String name, String description, int quentity,
+			BigDecimal price) {
 		this.name = name;
 		this.description = description;
 		this.setQuantity(quentity);

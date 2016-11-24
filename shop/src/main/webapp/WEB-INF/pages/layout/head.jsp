@@ -10,7 +10,9 @@
 <link href="${contextPath}/public/assets/css/bootstrap.css" rel="stylesheet" />
 <link href="${contextPath}/public/assets/css/style.css" rel="stylesheet" />
 <link href="${contextPath}/public/assets/css/font-awesome.min.css" rel="stylesheet" />
+<link href="${contextPath}/public/assets/css/nprogress.css" rel="stylesheet" />
 <script type="text/javascript" src="${contextPath}/public/assets/js/jquery-2.2.4.js"></script>
+<script type="text/javascript" src="${contextPath}/public/assets/nprogress.js"></script>
 <script type="text/javascript" src="${contextPath}/public/assets/products.js"></script>
 </head>
 <sec:authentication var="user" property="principal" />
