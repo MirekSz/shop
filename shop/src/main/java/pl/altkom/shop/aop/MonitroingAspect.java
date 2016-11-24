@@ -22,17 +22,16 @@ public class MonitroingAspect {
 
 	@Around("@within(org.springframework.stereotype.Controller) || @within(org.springframework.stereotype.Service) || @within(org.springframework.stereotype.Repository)")
 	public Object superTracer(ProceedingJoinPoint pjp) throws Throwable {
-		if (!enalbeTeracing) {
-			return pjp.proceed();
-		}
+		// if (!enalbeTeracing) {
+		// return pjp.proceed();
+		// }
 		MethodSignature ms = (MethodSignature) pjp.getSignature();
 		Method m = ms.getMethod();
 		long currentTimeMillis = System.currentTimeMillis();
 		traceStorage.incLevel();
 		Object obj = pjp.proceed();
 		long end = System.currentTimeMillis() - currentTimeMillis;
-		traceStorage.add("CZAS " + m.getDeclaringClass().getSimpleName() + "/"
-				+ m.getName() + ":" + end);
+		traceStorage.add("CZAS " + m.getDeclaringClass().getSimpleName() + "/" + m.getName() + ":" + end);
 		traceStorage.decLevel();
 		return obj;
 	}
