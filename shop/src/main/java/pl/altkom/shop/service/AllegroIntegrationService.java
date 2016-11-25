@@ -7,7 +7,7 @@ import pl.altkom.shop.Profiles;
 import pl.altkom.shop.model.SaleDocument;
 
 @Service
-@Profile(Profiles.PROD)
+@Profile(Profiles.WEB)
 public class AllegroIntegrationService {
 
 	public void send(SaleDocument saleDocument) {

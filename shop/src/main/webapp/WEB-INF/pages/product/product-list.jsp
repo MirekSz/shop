@@ -10,7 +10,12 @@
 <%@ include file="/WEB-INF/pages/layout/head.jsp"%>
 
 	<h3>Product list</h3>
-<spring:message code="some.code"/>
+<c:if test="${opDone!=null}">
+		<div class="alert alert-success" role="alert" >
+			<span class="glyphicon 	glyphicon glyphicon-ok" aria-hidden="true"></span>
+			Operacja wykonana pomyślnie
+		</div>
+</c:if>
 
 	<a href="new" class="btn btn-primary "> <i
 		class=" glyphicon glyphicon-plus"></i> Add new product
@@ -26,12 +31,7 @@
 		</div>
 	</div>
 	
-<c:if test="${opDone!=null}">
-		<div class="alert alert-success" role="alert" >
-			<span class="glyphicon 	glyphicon glyphicon-ok" aria-hidden="true"></span>
-			Operacja wykonana pomyślnie
-		</div>
-</c:if>
+
 	<table class="table table-hover table-striped">
 		<thead>
 			<tr>

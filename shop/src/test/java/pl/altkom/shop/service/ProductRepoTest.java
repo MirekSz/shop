@@ -7,8 +7,6 @@ import java.math.BigDecimal;
 import javax.inject.Inject;
 
 import org.junit.Test;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.context.SecurityContextHolder;
 
 import pl.altkom.shop.BaseTest;
 import pl.altkom.shop.model.Product;
@@ -20,13 +18,8 @@ public class ProductRepoTest extends BaseTest {
 
 	@Test
 	public void shoulAddProduct() throws Exception {
-		// UsernamePasswordAuthenticationToken authentication = new
-		// UsernamePasswordAuthenticationToken("user", "user");
-		UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken("admin", "admin");
-		SecurityContextHolder.getContext().setAuthentication(authentication);
-
 		// given
-		Product product = new Product("rower", "2", 10, BigDecimal.TEN);
+		Product product = new Product("rower", "2", 11, BigDecimal.TEN);
 		int beforeInsertSize = repo.getAll(null).size();
 
 		// when

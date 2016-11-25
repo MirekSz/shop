@@ -23,6 +23,27 @@ public class SaleDocumentTest {
 		saleDocument.addItem(saleDocumentItem);
 
 		// then
-		assertThat(saleDocument.getTotalPrice()).isEqualTo(BigDecimal.valueOf(40));
+		assertThat(saleDocument.getTotalPrice()).isEqualTo(
+				BigDecimal.valueOf(40));
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void shoulThrowExceptionWhenSale0Quantity() throws Exception {
+		// given
+		Product product = new Product();
+		product.setPrice(BigDecimal.TEN);
+
+		SaleDocumentItem saleDocumentItem = new SaleDocumentItem();
+		saleDocumentItem.setProduct(product);
+		saleDocumentItem.setQuantity(0);
+
+		SaleDocument saleDocument = new SaleDocument();
+
+		// when
+		saleDocument.addItem(saleDocumentItem);
+
+		// then
+		assertThat(saleDocument.getTotalPrice()).isEqualTo(
+				BigDecimal.valueOf(40));
 	}
 }

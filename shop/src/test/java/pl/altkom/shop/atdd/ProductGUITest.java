@@ -18,6 +18,8 @@ import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 
+import com.thoughtworks.selenium.webdriven.WebDriverBackedSelenium;
+
 public class ProductGUITest {
 	private ChromeDriver driver;
 
@@ -26,12 +28,12 @@ public class ProductGUITest {
 
 		@Override
 		protected void failed(Throwable e, Description description) {
-			File scrFile = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+			File scrFile = ((TakesScreenshot) driver)
+					.getScreenshotAs(OutputType.FILE);
 			try {
-				FileUtils
-						.copyFile(scrFile,
-								new File("c:\\tmp\\" + description.getClassName() + "_" + description.getMethodName()
-										+ ".png"));
+				FileUtils.copyFile(scrFile,
+						new File("c:\\tmp\\" + description.getClassName() + "_"
+								+ description.getMethodName() + ".png"));
 			} catch (IOException e1) {
 				System.out.println("Fail to take screen shot");
 			}
@@ -48,22 +50,46 @@ public class ProductGUITest {
 	public void prepare() {
 		System.setProperty("webdriver.chrome.driver", "chromedriver.exe");
 		driver = new ChromeDriver();
-		driver.manage().window().maximize();
-		driver.get("http://localhost:8080/shop/");
-		WebElement username = driver.findElement(By.name("username"));
-		username.sendKeys("user");
+		// driver.manage().window().maximize();
+		// driver.get("http://localhost:8080/shop/");
+		// WebElement username = driver.findElement(By.name("username"));
+		// username.sendKeys("user");
+		//
+		// WebElement password = driver.findElement(By.name("password"));
+		// password.sendKeys("user");
+		//
+		// password.submit();
+	}
 
-		WebElement password = driver.findElement(By.name("password"));
-		password.sendKeys("user");
+	@Test
+	public void guickTest() throws Exception {
+		WebDriverBackedSelenium selenium = new WebDriverBackedSelenium(driver,
+				"http://localhost:8080/shop/");
 
-		password.submit();
+		selenium.open("/shop/login?logout");
+		selenium.type("name=username", "user");
+		selenium.type("name=password", "user");
+		selenium.click("//button[@type='submit']");
+		selenium.waitForPageToLoad("30000");
+		selenium.click("link=Products list");
+		selenium.waitForPageToLoad("30000");
+		selenium.click("link=Add new product");
+		selenium.waitForPageToLoad("30000");
+		selenium.type("id=quantity", "1");
+		selenium.type("id=price", "1");
+		selenium.click("//button[@type='submit']");
+		selenium.waitForPageToLoad("30000");
+		selenium.type("id=quantity", "6");
+		selenium.click("//button[@type='submit']");
+		selenium.waitForPageToLoad("30000");
 	}
 
 	@Test
 	public void shoulDeleteProduct() throws Exception {
 		// given
 		driver.findElement(By.linkText("Products list")).click();
-		List<WebElement> rows = driver.findElements(By.cssSelector("table>tbody>tr"));
+		List<WebElement> rows = driver.findElements(By
+				.cssSelector("table>tbody>tr"));
 		int rowsSize = rows.size();
 		WebElement findElement = rows.get(0).findElement(By.tagName("a"));
 
@@ -76,4 +102,5 @@ public class ProductGUITest {
 		rows = driver.findElements(By.cssSelector("table>tbody>tr"));
 		assertThat(rows.size()).isLessThan(rowsSize);
 	}
+
 }

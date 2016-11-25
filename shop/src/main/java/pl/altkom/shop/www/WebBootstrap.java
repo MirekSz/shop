@@ -3,14 +3,19 @@ package pl.altkom.shop.www;
 import java.util.EnumSet;
 
 import javax.servlet.DispatcherType;
+import javax.servlet.FilterRegistration;
 import javax.servlet.FilterRegistration.Dynamic;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration;
 
+import net.bull.javamelody.MonitoringFilter;
+import net.bull.javamelody.SessionListener;
+
 import org.apache.cxf.transport.servlet.CXFServlet;
 import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.request.RequestContextListener;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.DelegatingFilterProxy;
@@ -28,23 +33,40 @@ public class WebBootstrap implements WebApplicationInitializer {
 		ctx.register(CoreConfig.class);
 		ctx.setServletContext(container);
 		container.addListener(new ContextLoaderListener(ctx));
+		container.addListener(RequestContextListener.class);
+		addJavaMelody(container);
 
-		Dynamic securityFiler = container.addFilter("springSecurityFilterChain",
-				new DelegatingFilterProxy("springSecurityFilterChain"));
-		securityFiler.addMappingForUrlPatterns(EnumSet.allOf(DispatcherType.class), false, "/*");
+		Dynamic securityFiler = container.addFilter(
+				"springSecurityFilterChain", new DelegatingFilterProxy(
+						"springSecurityFilterChain"));
+		securityFiler.addMappingForUrlPatterns(
+				EnumSet.allOf(DispatcherType.class), false, "/*");
 
-		ServletRegistration.Dynamic servlet = container.addServlet("dispatcher", new DispatcherServlet(ctx));
+		ServletRegistration.Dynamic servlet = container.addServlet(
+				"dispatcher", new DispatcherServlet(ctx));
 		servlet.setLoadOnStartup(1);
 		servlet.addMapping("/");
 		utf8(container);
-
 		addApacheCxfServlet(container);
+	}
+
+	private void addJavaMelody(ServletContext container) {
+		container.setInitParameter("javamelody.monitoring-path", "/javamelody");
+		container.setInitParameter("javamelody.resolution-seconds", "5");
+		container.setInitParameter("javamelody.disabled", "false");
+
+		container.addListener(new SessionListener());
+		FilterRegistration.Dynamic javamelodyFilter = container.addFilter(
+				"javamelodyFilter", MonitoringFilter.class);
+		javamelodyFilter.addMappingForUrlPatterns(
+				EnumSet.allOf(DispatcherType.class), false, "/*");
 
 	}
 
 	private void addApacheCxfServlet(ServletContext servletContext) {
 		CXFServlet cxfServlet = new CXFServlet();
-		ServletRegistration.Dynamic appServlet = servletContext.addServlet("CXFServlet", cxfServlet);
+		ServletRegistration.Dynamic appServlet = servletContext.addServlet(
+				"CXFServlet", cxfServlet);
 		appServlet.setLoadOnStartup(1);
 
 		appServlet.addMapping("/services/*");
@@ -56,6 +78,8 @@ public class WebBootstrap implements WebApplicationInitializer {
 		characterEncodingFilter.setForceEncoding(true);
 
 		container.addFilter("characterEncoding", characterEncodingFilter)
-				.addMappingForUrlPatterns(EnumSet.of(DispatcherType.REQUEST, DispatcherType.FORWARD), true, "/*");
+				.addMappingForUrlPatterns(
+						EnumSet.of(DispatcherType.REQUEST,
+								DispatcherType.FORWARD), true, "/*");
 	}
 }

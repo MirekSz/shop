@@ -11,7 +11,7 @@ import pl.altkom.shop.model.SaleDocument;
 
 @Component
 @WebService
-public class SaleDocumentSOAPWebService {
+public class CopyOfSaleDocumentSOAPWebService {
 	@WebMethod
 	public SaleDocument findById(Long id) {
 		SaleDocument saleDocument = new SaleDocument();

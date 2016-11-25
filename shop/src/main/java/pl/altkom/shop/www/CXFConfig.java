@@ -16,7 +16,6 @@ import org.apache.cxf.feature.LoggingFeature;
 import org.apache.cxf.jaxrs.JAXRSServerFactoryBean;
 import org.apache.cxf.jaxws.EndpointImpl;
 import org.apache.cxf.transport.common.gzip.GZIPFeature;
-import org.apache.cxf.validation.BeanValidationFeature;
 import org.apache.cxf.validation.ResponseConstraintViolationException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,9 +26,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
 import org.springframework.context.annotation.Profile;
 
-import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
-
 import pl.altkom.shop.Profiles;
+
+import com.fasterxml.jackson.jaxrs.json.JacksonJsonProvider;
 
 @Configuration
 @ImportResource(value = { "classpath:META-INF/cxf/cxf.xml" })
@@ -41,21 +40,20 @@ public class CXFConfig implements ApplicationContextAware {
 
 	@PostConstruct
 	public void soapServer() {
-		String[] beanNamesForAnnotation = context.getBeanNamesForAnnotation(WebService.class);
+		String[] beanNamesForAnnotation = context
+				.getBeanNamesForAnnotation(WebService.class);
 		// cxfBus.getOutFaultInterceptors().add(new ExceptionHandler());
 		for (String string : beanNamesForAnnotation) {
 			Object bean = context.getBean(string);
 			EndpointImpl endpoint = new EndpointImpl(cxfBus, bean);
 			endpoint.publish("/" + bean.getClass().getSimpleName());
 		}
-
-		// enable features
 		LoggingFeature loggingFeature = new LoggingFeature();
-		loggingFeature.setPrettyLogging(true);
+		// loggingFeature.setPrettyLogging(true);
 		GZIPFeature gzipFeature = new GZIPFeature();
 		gzipFeature.setForce(true);
 		gzipFeature.setThreshold(10);
-		cxfBus.setFeatures(Arrays.asList(loggingFeature, new BeanValidationFeature(), gzipFeature));
+		cxfBus.setFeatures(Arrays.asList(loggingFeature, gzipFeature));
 	}
 
 	@Bean
@@ -64,8 +62,10 @@ public class CXFConfig implements ApplicationContextAware {
 		endpoint.setStaticSubresourceResolution(true);
 		endpoint.setBus(cxfBus);
 		endpoint.setAddress("/rest");
-		endpoint.setProviders(Arrays.asList(new JacksonJsonProvider(), new ExceptionHandler()));
-		String[] beanNamesForAnnotation = context.getBeanNamesForAnnotation(Path.class);
+		endpoint.setProviders(Arrays.asList(new JacksonJsonProvider(),
+				new ExceptionHandler()));
+		String[] beanNamesForAnnotation = context
+				.getBeanNamesForAnnotation(Path.class);
 		List<Object> webServices = new ArrayList<>();
 		for (String string : beanNamesForAnnotation) {
 			webServices.add(context.getBean(string));
@@ -75,19 +75,24 @@ public class CXFConfig implements ApplicationContextAware {
 	}
 
 	@Override
-	public void setApplicationContext(ApplicationContext context) throws BeansException {
+	public void setApplicationContext(ApplicationContext context)
+			throws BeansException {
 		this.context = context;
 	}
 
-	public static class ExceptionHandler implements ExceptionMapper<ResponseConstraintViolationException> {
+	public static class ExceptionHandler implements
+			ExceptionMapper<ResponseConstraintViolationException> {
 		@Override
-		public Response toResponse(ResponseConstraintViolationException exception) {
+		public Response toResponse(
+				ResponseConstraintViolationException exception) {
 			Response.Status status;
 
 			status = Response.Status.INTERNAL_SERVER_ERROR;
 
-			return Response.status(status).header("exception", exception.getMessage())
-					.entity(exception.getConstraintViolations().toString()).build();
+			return Response.status(status)
+					.header("exception", exception.getMessage())
+					.entity(exception.getConstraintViolations().toString())
+					.build();
 		}
 	}
 }
